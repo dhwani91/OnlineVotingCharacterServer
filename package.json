@@ -1,0 +1,21 @@
+{
+  "name": "votingserver",
+  "version": "1.0.0",
+  "description": "online voting server for characters",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "mongoose": "^4.8.5",
+    "node": "0.0.0",
+    "nodemon": "^1.11.0",
+    "request": "^2.79.0",
+    "xml2js": "^0.4.17"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dhwani Sanghvi <dhwani.sanghvi91@gmail.com> (http://dhwanisanghvi.com)",
+  "license": "ISC"
+}
