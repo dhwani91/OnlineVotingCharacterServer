@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 require('./app/controllers/charactersCtrl')(app);
 
-var port = process.env.PORT || 3000;        // set our port
+app.set('port', process.env.PORT || 3000);       // set our port
 var uristring =
     process.env.MONGOLAB_URI ||
     process.env.MONGOHQ_URL ||
@@ -26,5 +26,21 @@ mongoose.connect(uristring, function (err, res) {
     }
 });
 
-app.listen(port);
-console.log('Magic happens on port ' + port);
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var onlineUsers = 0;
+
+io.sockets.on('connection', function(socket) {
+    onlineUsers++;
+
+    io.sockets.emit('onlineUsers', { onlineUsers: onlineUsers });
+
+    socket.on('disconnect', function() {
+        onlineUsers--;
+        io.sockets.emit('onlineUsers', { onlineUsers: onlineUsers });
+    });
+});
+
+server.listen(app.get('port'), function() {
+    console.log('Express server listening on port ' + app.get('port'));
+});
